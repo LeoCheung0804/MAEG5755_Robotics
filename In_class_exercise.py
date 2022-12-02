@@ -11,16 +11,45 @@ class Trajectory_linear(object):
         self.angle_min = [-90, -15, -180]
         self.angle_max = [90, 180, 10]
         assert len(_init_theta) == len(_end_theta), 'DoF doesnt match! '
-        ### TODO: calculate paramenter self.k and self.b for each joint
-        self.k =
-        self.b =
-        self.offset =
+        ### TODO: calculate paramenter self.k and self.b for each joint theta =𝑘𝑡+𝑏
+        self.k = (_end_theta - _init_theta)/(t_f)
+        self.b = (_init_theta)
+        self.offset = 0
+
+
 
     def get_angles(self, t):
-        angles = []
+       angles = []
         ### TODO: get angle for each joint
-        angles =
-        
+        angles = angle
+
+def RotX(angle):
+    R = np.array([[1, 0, 0], [0, np.cos(angle), -np.sin(angle)], [0, np.sin(angle), np.cos(angle)]])
+    return R
+
+
+def RotY(angle):
+    R = np.array([[np.cos(angle), 0, np.sin(angle)], [0, 1, 0], [-np.sin(angle), 0, np.cos(angle)]])
+    return R
+
+
+def RotZ(angle):
+    R = np.array([[np.cos(angle), -np.sin(angle), 0], [np.sin(angle), np.cos(angle), 0], [0, 0, 1]])
+    return R
+
+
+def RotXYZ(angle):
+    Rx = RotX(angle[0])
+    Ry = RotY(angle[1])
+    Rz = RotZ(angle[2])
+    # R = Rx.dot(Ry).dot(Rz)
+    R = Rx @ Ry @ Rz
+    return R
+
+
+angle = np.array(theta)
+Rxyz = RotXYZ(angle)
+print(Rxyz)
 
     def get_whole_traj(self):
         angle_list = [[] for i in range(self.num_joints)]
