@@ -11,8 +11,8 @@ def cosd(x):
     return np.cos(x * np.pi / 180)
 
 # arctan(y/x)
-def atand(y,x):
-    a = math.atan2(y,x) * 180 / np.pi
+def atand(y, x):
+    a = math.atan2(y, x) * 180 / np.pi
     return a
 
 def asind(x):
@@ -20,3 +20,8 @@ def asind(x):
 
 def acosd(x):
     return np.arccos(x) * 180 / np.pi
+
+if __name__ == '__main__':
+    x = 0.273
+    y = acosd(x)
+    print(y)

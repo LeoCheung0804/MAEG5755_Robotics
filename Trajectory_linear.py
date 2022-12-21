@@ -40,8 +40,8 @@ class Trajectory_linear(object):
         return angle_list
 
 
-theta_0 = [0, 180, -140]
-theta_f = [0, 90, -140]
+theta_0 = [-90, -15, -90]
+theta_f = [90, 180, 45]
 t_f = 3
 if __name__ == '__main__':
     whole_traj = Trajectory_linear(theta_0, theta_f, t_f).get_whole_traj()

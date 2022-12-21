@@ -1,16 +1,5 @@
-
 import numpy as np
 
-def generate_object_trajectory(px,py,pz,rx,ry,rz):
-    # generate angle lists
-    position_x_list = [px]
-    position_y_list = [py]
-    position_z_list = [pz]
-    rotation_x_list = [rx]
-    rotation_y_list = [ry]
-    rotation_z_list = [rz]
-
-    return [position_x_list, position_y_list, position_z_list, rotation_x_list, rotation_y_list, rotation_z_list]
 
 class Trajectory_linear(object):
     def __init__(self, _init_x, _end_x, t_f):
@@ -27,6 +16,7 @@ class Trajectory_linear(object):
         self.k = [(self.end_theta[i] - self.init_theta[i]) / t_f for i in range(self.num_joints)]
         self.b = [self.init_theta[i] for i in range(self.num_joints)]
         self.offset = [0, 0, 0]
+
 
     def get_angles(self, t):
         angles = []
@@ -48,30 +38,15 @@ class Trajectory_linear(object):
                 angle_list[i].append(angles[i])
         return angle_list
 
-obj_x_0 = [-30]
-obj_x_f = [10]
-obj_y_0 = [0]
-obj_y_f = [0]
-obj_z_0 = [0]
-obj_z_f = [-40]
-obj_r_0 = [0,0,0]
-obj_r_f = [0,0,0]
-t_f = 3
 
+theta_0 = [0, 50, 0]
+theta_f = [40, 10, 1]
+t_f = 3
 if __name__ == '__main__':
-    x_traj = Trajectory_linear(obj_x_0, obj_x_f, t_f).get_whole_traj()
-    y_traj = Trajectory_linear(obj_y_0, obj_y_f, t_f).get_whole_traj()
-    z_traj = Trajectory_linear(obj_z_0, obj_z_f, t_f).get_whole_traj()
-    px = x_traj
-    py = y_traj
-    pz = z_traj
-    rx = 0
-    ry = 0
-    rz = 0
-    return_str = ''
-    obj_trajectory = generate_object_trajectory(px, py, pz, rx, ry, rz)
-    for trajectory in obj_trajectory:
+    whole_traj = Trajectory_linear(theta_0, theta_f, t_f).get_whole_traj()
+    return_str = 'angle;'
+    for trajectory in whole_traj:
         return_str += ",".join([str(i) for i in trajectory]) + ";"
     print(return_str)
-    with open('object_trajectory.txt', 'w') as f:
+    with open('linear_trajectory.txt', 'w') as f:
         f.write(return_str)
